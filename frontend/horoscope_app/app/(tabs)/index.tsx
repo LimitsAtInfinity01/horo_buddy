@@ -1,25 +1,33 @@
-import { Text, View, StyleSheet, Image } from 'react-native';
+import React from 'react';
+import { Text, View, StyleSheet, Image, TextInput } from 'react-native';
+import { globalStyles } from '@/global_styles/global_styles'
+
+
+import UserForm from '@/components/user_data_form';
 
 
 export default function Index() {
+
+
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.mainTitle}>Welcome to Horo Buddy</Text>
       <View>
-         <Image style={styles.horoBuddy} source={require('@/assets/images/aquarius_owl.png')}/>
+        <UserForm  />
       </View>
-      <Text style={styles.buddySpeak}>Magnam vel nihil culpa similique error rem ratione maxime illum nesciunt optio laborum praesentium perferendis deserunt officiis, facilis voluptatem molestiae quas impedit!</Text>
     </View>
   );
 }
 
 
+
+
+
 const styles = StyleSheet.create({
   mainContainer:{
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#00193b'
+    backgroundColor: globalStyles.backgroundColor,
   },
 
   mainTitle: {
@@ -39,10 +47,17 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
 
-  horoBuddy: {
+  astroBuddy: {
     resizeMode: 'contain',
     width: 400,
     height: 350,
-  }
+  },
+
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
 
 })

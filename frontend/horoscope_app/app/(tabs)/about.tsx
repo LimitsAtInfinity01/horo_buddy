@@ -1,4 +1,5 @@
 import { Text, View, StyleSheet } from 'react-native';
+import { globalStyles } from '@/global_styles/global_styles';
 
 export default function AboutScreen() {
   return (
@@ -11,7 +12,7 @@ export default function AboutScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
+    backgroundColor: globalStyles.backgroundColor,
     justifyContent: 'center',
     alignItems: 'center',
   },
