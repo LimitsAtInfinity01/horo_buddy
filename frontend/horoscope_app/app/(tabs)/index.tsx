@@ -1,19 +1,26 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image, TextInput } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { globalStyles } from '@/global_styles/global_styles'
+import UserForm  from '@/components/user_data_form'
 
-
-import UserForm from '@/components/user_data_form';
 
 
 export default function Index() {
 
+  interface UserFormData {
+    name: string;
+    zodiacSign: string;
+  }
+
+  const handleFormSubmit = (data: UserFormData): void => {
+    console.log(`${data.name}, ${data.zodiacSign}`)
+  }
 
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.mainTitle}>Welcome to Horo Buddy</Text>
       <View>
-        <UserForm  />
+        <UserForm onSubmit={handleFormSubmit} />
       </View>
     </View>
   );

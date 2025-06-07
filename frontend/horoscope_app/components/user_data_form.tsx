@@ -1,26 +1,68 @@
-import React from 'react';
-import { View, TextInput, StyleSheet, TextStyle, Pressable, Text } from "react-native";
+import React, {useState} from 'react';
+import { View, TextInput, StyleSheet, Pressable, Text, Button, Platform } from "react-native";
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+
+import moment from 'moment';
+
+type UserFormProps = {
+    onSubmit?: (data: { name: string; zodiacSign: string }) => void;
+};
+
+export default function UserForm({ onSubmit }: UserFormProps) {
+    const [name, onChangeName] = useState('')
+    const [zodiacSign, onChangeSign] = useState('')
+    const [date, setDate] = useState(new Date())
+    const [showPicker, setShowPicker] = useState(false);
 
 
-export default function UserForm() {
-    const [name, onChangeName] = React.useState('')
-    const [zodiacSign, onChangeSign] = React.useState('')
+    const handleSubmit = () => {
+        if (onSubmit) {
+            onSubmit({ name, zodiacSign });
+        }
+    }
+
+
+    const onChange = (event: DateTimePickerEvent, selectedDate?: Date | undefined) => {
+        setShowPicker(Platform.OS === 'ios' || Platform.OS === 'web' || Platform.OS === 'android');
+        if (selectedDate) {
+          setDate(selectedDate);
+        }
+    };
+
+      const showDatepicker = () => {
+        setShowPicker(true);
+      };
 
     return (
         <View style={ styles.container }>
 
             <View>
-                <Text style={ styles.label }>Enter your name.</Text>
-                <TextInput style={ styles.textInput } onChangeText={onChangeName} value={name} />
+                <Text  style={ styles.label }>Enter your name.</Text>
+                <TextInput placeholder='John Doe' placeholderTextColor="#999" style={ styles.textInput } onChangeText={onChangeName} value={name} />
             </View>
 
             <View>
-                <Text style={ styles.label } >Enter your name.</Text>
-                <TextInput style={ styles.textInput } onChangeText={onChangeSign} value={zodiacSign} />
+                <Text style={ styles.label } >Enter your zodiac sign.</Text>
+                <TextInput placeholder='Scorpio' placeholderTextColor="#999" style={ styles.textInput } onChangeText={onChangeSign} value={zodiacSign} />
+            </View>
+
+            <View>
+                <Text style={ styles.label } >Selected Date: {moment(date).format('YYYY-MM-DD')}</Text>
+                <Button title="Select Date" onPress={showDatepicker} />
+                {showPicker && (
+                    <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode="date"
+                    is24Hour={true}
+                    display="default"
+                    onChange={onChange}
+                    />
+                )}
             </View>
 
 
-            <Pressable style={ styles.pressable }>
+            <Pressable style={ styles.pressable } onPress={handleSubmit}>
                 <Text style={ styles.textPressable }>Submit</Text>
             </Pressable>
         </View>
@@ -38,6 +80,8 @@ const styles = StyleSheet.create({
         color: 'black',
         width: 350,
         height: 40,
+        fontSize: 20,
+        paddingLeft: 10,
         backgroundColor: 'white'
     },
 
