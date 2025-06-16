@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-export default function NatalChart() {
+export default function Profile() {
   return (
     <View>
-      <Text>Natal Chart</Text>
+      <Text>Profile</Text>
     </View>
   )
 }

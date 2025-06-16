@@ -1,33 +1,15 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { globalStyles } from '@/global_styles/global_styles'
-import UserForm  from '@/components/user_data_form'
-
-
+import {COLORS} from '@/constants/theme'
 
 export default function Index() {
-
-  interface UserFormData {
-    name: string;
-    zodiacSign: string;
-  }
-
-  const handleFormSubmit = (data: UserFormData): void => {
-    console.log(`${data.name}, ${data.zodiacSign}`)
-  }
-
   return (
     <View style={styles.mainContainer}>
-      <Text style={styles.mainTitle}>Welcome to Horo Buddy</Text>
-      <View>
-        <UserForm onSubmit={handleFormSubmit} />
-      </View>
+      <Text style={ styles.mainTitle }>Home Screen</Text>
     </View>
   );
 }
-
-
-
 
 
 const styles = StyleSheet.create({
@@ -35,6 +17,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: globalStyles.backgroundColor,
+    color: COLORS.mainColor,
+    paddingTop: 20,
   },
 
   mainTitle: {
