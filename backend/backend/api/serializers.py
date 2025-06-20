@@ -1,13 +1,9 @@
+# serializers.py
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 
-from .models import Note
-
-class NoteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Note
-        fields = '__all__'
+from .models import Profile
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -21,11 +17,15 @@ class UserSerializer(serializers.ModelSerializer):
         ]
     )
     password = serializers.CharField(write_only=True, required=True)
-    print(password)
     class Meta:
         model = User
         fields = ('id', 'username', 'password')
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
+        
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ('name', 'last_name', 'zodiac_sign', 'email', 'birthdate')
         

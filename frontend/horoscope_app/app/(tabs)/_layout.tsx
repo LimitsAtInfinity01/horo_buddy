@@ -1,15 +1,54 @@
+// (tabs)/_layout.tsx
 import React from 'react'
 import { Tabs } from 'expo-router'
-import { Ionicons } from '@expo/vector-icons'
-import AntDesign from '@expo/vector-icons/AntDesign';
+import { Telescope, Home, Hash, Layers, LogOut } from 'lucide-react-native'
 
 export default function TabLayout() {
   return (
     <Tabs screenOptions={ {tabBarShowLabel: true, headerShown: false } }>
-      <Tabs.Screen options={{ tabBarIcon: () => <Ionicons name='home'  size={24}/> }} name='index' />
-      <Tabs.Screen options={{ tabBarIcon: () => <AntDesign name="smile-circle" size={24} color="black" /> }} name='buddy' />
-      <Tabs.Screen options={{ tabBarIcon: () => <Ionicons name="planet-sharp" size={24} color="black" />}} name='natal_chart' />
-      <Tabs.Screen options={{ tabBarIcon: () => <Ionicons name='person-circle'  size={24} /> }} name='profile' />
+      
+      <Tabs.Screen name='index' 
+      options={{ 
+        tabBarLabel: 'Home',
+        tabBarIcon: ({color, size}) => <Home color={color} size={size} /> 
+        
+      }} 
+      />
+
+      <Tabs.Screen name='astrology' 
+      options={{ 
+        tabBarLabel: 'Astrology',
+        tabBarIcon: ({ color, size }) => <Telescope color={color} size={size} /> 
+
+      }} 
+      />
+
+      <Tabs.Screen name='numerology' 
+      options={{ 
+        tabBarLabel: 'Numerology',
+        tabBarIcon: ({ color, size }) => <Hash /> 
+
+      }} 
+      />
+
+      <Tabs.Screen name='tarot' 
+      options={{ 
+
+        tabBarLabel: 'Tarot',
+        tabBarIcon: ({ color, size }) => <Layers color={color} size={size} /> 
+
+      }} 
+      />
+
+      <Tabs.Screen
+        name='logout'
+        options={{
+          tabBarLabel: 'Logout',
+          tabBarIcon: ({ color, size }) => <LogOut color={color} size={size} /> 
+
+        }}
+      />
+
     </Tabs>
   )
 }

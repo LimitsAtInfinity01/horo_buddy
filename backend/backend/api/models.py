@@ -1,9 +1,15 @@
 # model.py
 
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
-class Note(models.Model):
-    title = models.CharField(max_length=100)
-    body = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=256, blank=False)
+    last_name = models.CharField(max_length=256, blank=False)
+    zodiac_sign = models.CharField(max_length=256, blank=False)
+    email = models.CharField(max_length=256, blank=False)
+    birthdate = models.DateTimeField(null=True, blank=True)
+
+

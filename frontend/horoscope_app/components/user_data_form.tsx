@@ -4,28 +4,37 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 
 import moment from 'moment';
 
+import { globalStyles } from '@/global_styles/global_styles';
+
 type UserFormProps = {
-    onSubmit?: (data: { name: string; zodiacSign: string }) => void;
+    onSubmit?: (data: { name: string; lastName: string, zodiacSign: string, email: string, birthdate: string }) => void;
 };
 
 export default function UserForm({ onSubmit }: UserFormProps) {
-    const [name, onChangeName] = useState('')
-    const [zodiacSign, onChangeSign] = useState('')
-    const [date, setDate] = useState(new Date())
+    const [name, setName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [zodiacSign, setSign] = useState('')
+    const [birthdate, setBirthdate] = useState(new Date())
     const [showPicker, setShowPicker] = useState(false);
-
+    const [email, setEmail] = useState('');
+    
 
     const handleSubmit = () => {
+        if ( !name || !lastName || !zodiacSign || !email || !birthdate ){
+            alert("Please fill out all fields")
+            return;
+        }
+
         if (onSubmit) {
-            onSubmit({ name, zodiacSign });
+            onSubmit({ name, lastName, zodiacSign, birthdate: birthdate.toISOString(), email });
+            alert("Profile created")
         }
     }
 
-
-    const onChange = (event: DateTimePickerEvent, selectedDate?: Date | undefined) => {
+    const onChangeSetDate = (event: DateTimePickerEvent, selectedDate?: Date | undefined) => {
         setShowPicker(Platform.OS === 'ios' || Platform.OS === 'web' || Platform.OS === 'android');
         if (selectedDate) {
-          setDate(selectedDate);
+          setBirthdate(selectedDate);
         }
     };
 
@@ -38,29 +47,38 @@ export default function UserForm({ onSubmit }: UserFormProps) {
 
             <View>
                 <Text  style={ styles.label }>Enter your name.</Text>
-                <TextInput placeholder='John Doe' placeholderTextColor="#999" style={ styles.textInput } onChangeText={onChangeName} value={name} />
+                <TextInput placeholder='First name' placeholderTextColor="#999" style={ styles.textInput } onChangeText={setName} value={name} />
+            </View>
+
+            <View>
+                <Text  style={ styles.label }>Enter your last name.</Text>
+                <TextInput placeholder='Last name' placeholderTextColor="#999" style={ styles.textInput } onChangeText={setLastName} value={lastName} />
             </View>
 
             <View>
                 <Text style={ styles.label } >Enter your zodiac sign.</Text>
-                <TextInput placeholder='Scorpio' placeholderTextColor="#999" style={ styles.textInput } onChangeText={onChangeSign} value={zodiacSign} />
+                <TextInput placeholder='Scorpio' placeholderTextColor="#999" style={ styles.textInput } onChangeText={setSign} value={zodiacSign} />
+            </View>
+
+
+            <View>
+                <Text style={ styles.label } >Enter your email address.</Text>
+                <TextInput placeholder='Email' placeholderTextColor="#999" style={ styles.textInput } onChangeText={setEmail} value={email} />
             </View>
 
             <View>
-                <Text style={ styles.label } >Selected Date: {moment(date).format('YYYY-MM-DD')}</Text>
                 <Button title="Select Date" onPress={showDatepicker} />
                 {showPicker && (
                     <DateTimePicker
                     testID="dateTimePicker"
-                    value={date}
+                    value={birthdate}
                     mode="date"
                     is24Hour={true}
                     display="default"
-                    onChange={onChange}
+                    onChange={onChangeSetDate}
                     />
                 )}
             </View>
-
 
             <Pressable style={ styles.pressable } onPress={handleSubmit}>
                 <Text style={ styles.textPressable }>Submit</Text>
@@ -71,9 +89,10 @@ export default function UserForm({ onSubmit }: UserFormProps) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 0,
         gap: 50,
         alignItems: 'center',
+        backgroundColor: 'black',
     },
 
     textInput: {

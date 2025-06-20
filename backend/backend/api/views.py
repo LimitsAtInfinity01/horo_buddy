@@ -2,27 +2,23 @@
 # views.py  
 from django.shortcuts import render
 from rest_framework import viewsets, generics
-from .models import Note
-from .serializers import NoteSerializer, UserSerializer
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-# For returning dummy responses
+from .serializers import UserSerializer, ProfileSerializer
+from .models import Profile
+
+# For returning DUMMY responses
 from django.http import JsonResponse
-from .horoscope_api import horoscope, compability, birth_chart, personality
+from .horoscope_api import horoscope, compability, birth_chart, personality, signDetails
 
 
 # Importing API Wrapper for RoxyAPI Horoscopes
 from .horoscope_api import RoxyAPIHoroscope
 
-
-class NoteViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
-    queryset = Note.objects.all().order_by('-created')
-    serializer_class = NoteSerializer
 
 class UserRegisterView(generics.CreateAPIView):
     """
@@ -42,6 +38,17 @@ class HoroscopeView(APIView):
     #     if data:
     #         return Response(data)
     #     return Response({'error': 'Could not fetch horoscope'})
+
+class SignDetailsView(APIView):
+    def get(self, request, sign):
+        print(signDetails)
+        return JsonResponse(signDetails)
+        # api = RoxyAPIHoroscope()
+        # data = api.detailedZodiacSign(sign=sign)
+        # if data:
+        #     return Response(data)
+        # return Response({'error': 'Could not fetch sign details'})
+
 
 class CompabilityView(APIView):
     def post(self, request):
@@ -74,3 +81,21 @@ class BirthChartView(APIView):
         # if data:
         #     return Response(data)
         # return Response({'error': 'Could not fetch Birthdate chart'})
+
+class ProfileView(APIView):
+    permission_class = [IsAuthenticated]
+    def get(self, request):
+        profile, _ = Profile.objects.get_or_create(user=request.user)
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        profile, _ = Profile.objects.get_or_create(user=request.user)
+        print("Incoming data:", request.data)  # 👈 Add this line
+        serializer = ProfileSerializer(profile, data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data)
+        else:
+            print("Serializer errors:", serializer.errors)
+            return Response(serializer.errors, status=400)

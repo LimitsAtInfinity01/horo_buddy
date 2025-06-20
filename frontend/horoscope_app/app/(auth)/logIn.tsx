@@ -1,3 +1,4 @@
+// login.tsx
 import React, {useState} from 'react';
 import { Link, useRouter } from 'expo-router';
 import { View, Text, TextInput, StyleSheet, Alert  } from 'react-native';
@@ -35,9 +36,9 @@ export default function LogIn(){
             body: JSON.stringify({username, password})
         });
 
-        console.log('HTTP', response.status)
+        // console.log('HTTP', response.status)
         const data: AuthResponse | AuthError = await response.json();
-        console.log('Body', data)
+        // console.log('Body', data)
         if (!response.ok){
             throw data;
         }
@@ -50,16 +51,16 @@ export default function LogIn(){
 
 
     const handleLogin = async () => {
-        console.log('≫ handleLogin fired')
+        // console.log('≫ handleLogin fired')
         if (!username || !password) {
             return Alert.alert('Error','Please enter both username and password');
         }
         try {
             const auth = await authenticate(username, password);
-            console.log('✅ authenticate() ok:', auth);
+            // console.log('✅ authenticate() ok:', auth);
             router.replace('/(tabs)')
         } catch (err) {
-            console.log('❌ auth error', err);
+            // console.log('❌ auth error', err);
             let errorMessage = 'Login failed';
             if (err && typeof err === 'object' && 'detail' in err) {
                 errorMessage = (err as { detail?: string }).detail || errorMessage;

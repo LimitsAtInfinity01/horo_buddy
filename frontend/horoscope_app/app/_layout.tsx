@@ -11,7 +11,7 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <SafeAreaView style={{flex:1, backgroundColor: 'black'}}>
         <Stack screenOptions={{ headerShown: false }}>
-          {/* <Stack.Screen name="index" options={{ headerShown: false, title: 'Home' }} /> */}
+          <Stack.Screen name="index" options={{ headerShown: false, title: 'Home' }} />
         </Stack>
       </SafeAreaView>
     </SafeAreaProvider>

@@ -30,6 +30,20 @@ class RoxyAPIHoroscope:
             print("Cannot connect to API")
             return None
 
+    def detailedZodiacSign(self, sign: str):
+        zodiacURL = f"{self.base_url}zodiac/{sign}?token={self.API_TOKEN}"
+        try:
+            response = requests.get(zodiacURL)
+            if 299 >= response.status_code >= 200:
+                print(response.json())
+                return response.json()
+            else:
+                raise HoroscopeError('Cannot retrieve Zodiac Details')
+        except requests.RequestException:
+            print('Cannot connect to API')
+            return None
+
+
     def compability(self, profiles):
         compabilityURL = f"{self.base_url}compatibility?token={self.API_TOKEN}"
         try:
@@ -102,7 +116,7 @@ personality = {
 }
 horoscope={
     'sign': 'scorpio',
-    'horoscope': 'A little self-compassion can make a big difference in your day., Scorpio. At times, you feel that every experience leaves a lasting imprint on you.'
+    'horoscope': 'A little self-compassion can make a big difference in your day., Scorpio. At times, you feel that every experience leaves a lasting imprint on you. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel placeat non consectetur similique corporis nulla molestias. Harum corrupti nobis autem nihil reprehenderit qui labore aliquam magnam quam. Tenetur, eveniet illo.'
 }
 birth_chart = {
     "name": "Bruce Wayne",
@@ -332,6 +346,22 @@ birth_chart = {
         },
     ],
 }
+signDetails = {
+    'name': 'Scorpio',
+    'symbol': '♏',
+    'start_date': 'October 23',
+    'end_date': 'November 21',
+    'element': 'Water',
+    'modality': 'Fixed',
+    'image': 'https://cdn.roxyapi.com/img/astrology/scorpio.png',
+    'personality': (
+        'Passionate, resourceful, and intense. Scorpio is deeply emotional and driven, '
+        'often seeking meaningful connections and transformative experiences. They are highly intuitive '
+        'and can sense things that others might miss. While they can be secretive or even vengeful when wronged, '
+        'their loyalty and determination make them powerful allies.'
+    )
+}
+
 
 # needs to be in this format for compability
 profiles_object = {

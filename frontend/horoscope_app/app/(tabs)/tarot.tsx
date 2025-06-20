@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-export default function Profile() {
+export default function Tarot() {
   return (
     <View>
-      <Text>Profile</Text>
+      <Text>Tarot</Text>
     </View>
   )
 }
