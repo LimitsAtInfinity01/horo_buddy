@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (UserRegisterView, HoroscopeView, CompabilityView, 
                     PersonalityView, BirthChartView, ProfileView,
-                    SignDetailsView)
+                    SignDetailsView, NumerologyFiguresView)
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -23,4 +23,9 @@ urlpatterns = [
     path('personality/', PersonalityView.as_view(), name='personality'),
     path('birth_chart/', BirthChartView.as_view(), name='birth_chart'),
     path('profile/', ProfileView.as_view(), name='profile'),
+
+    
+    # Numerology Endpoint urls
+    path('numerology_figures/', NumerologyFiguresView.as_view(), name='numerolog_figures'),
+
 ]

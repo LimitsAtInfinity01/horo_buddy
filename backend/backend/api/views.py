@@ -11,13 +11,10 @@ from rest_framework import status
 from .serializers import UserSerializer, ProfileSerializer
 from .models import Profile
 
-# For returning DUMMY responses
-from django.http import JsonResponse
-from .horoscope_api import horoscope, compability, birth_chart, personality, signDetails
-
 
 # Importing API Wrapper for RoxyAPI Horoscopes
 from .horoscope_api import RoxyAPIHoroscope
+from .numerology_api import RoxyAPINumerology
 
 
 class UserRegisterView(generics.CreateAPIView):
@@ -32,55 +29,49 @@ class UserRegisterView(generics.CreateAPIView):
 
 class HoroscopeView(APIView):
     def get(self, request, sign):
-        return JsonResponse(horoscope) 
-    #     api = RoxyAPIHoroscope()
-    #     data = api.horoscope(sign=sign)
-    #     if data:
-    #         return Response(data)
-    #     return Response({'error': 'Could not fetch horoscope'})
+        api = RoxyAPIHoroscope()
+        data = api.horoscope(sign=sign)
+        if data:
+            return Response(data)
+        return Response({'error': 'Could not fetch horoscope'})
 
 class SignDetailsView(APIView):
     def get(self, request, sign):
         print(signDetails)
-        return JsonResponse(signDetails)
-        # api = RoxyAPIHoroscope()
-        # data = api.detailedZodiacSign(sign=sign)
-        # if data:
-        #     return Response(data)
-        # return Response({'error': 'Could not fetch sign details'})
-
+        api = RoxyAPIHoroscope()
+        data = api.detailedZodiacSign(sign=sign)
+        if data:
+            return Response(data)
+        return Response({'error': 'Could not fetch sign details'})
 
 class CompabilityView(APIView):
     def post(self, request):
-        return Response(compability)
-        # profiles = request.data.get('people')
-        # api = RoxyAPIHoroscope()
-        # data = api.compability(profiles=profiles)
-        # if data:
-        #     return Response(data)
-        # return Response({'error': 'Could not fetch compability'})
+        profiles = request.data.get('people')
+        api = RoxyAPIHoroscope()
+        data = api.compability(profiles=profiles)
+        if data:
+            return Response(data)
+        return Response({'error': 'Could not fetch compability'})
 
 class PersonalityView(APIView):
     def post(self, request):
-        return Response(personality)
-        # birthday_details = request.data.get('birthdate_details')
-        # api = RoxyAPIHoroscope()
-        # data = api.personality(personal_details=birthday_details)
-        # if data:
-        #     return Response(data)
-        # return Response({'error': 'Could not fetch personality'})
+        birthday_details = request.data.get('birthdate_details')
+        api = RoxyAPIHoroscope()
+        data = api.personality(personal_details=birthday_details)
+        if data:
+            return Response(data)
+        return Response({'error': 'Could not fetch personality'})
     
 class BirthChartView(APIView):
     def post(self, request):
-        return Response(birth_chart)
-        # birthday_details = request.data
-        # print(birthday_details)
-        # api = RoxyAPIHoroscope()
-        # data = api.birthChart(personal_details=birthday_details)
-        # print(data)
-        # if data:
-        #     return Response(data)
-        # return Response({'error': 'Could not fetch Birthdate chart'})
+        birthday_details = request.data
+        print(birthday_details)
+        api = RoxyAPIHoroscope()
+        data = api.birthChart(personal_details=birthday_details)
+        print(data)
+        if data:
+            return Response(data)
+        return Response({'error': 'Could not fetch Birthdate chart'})
 
 class ProfileView(APIView):
     permission_class = [IsAuthenticated]
@@ -99,3 +90,12 @@ class ProfileView(APIView):
         else:
             print("Serializer errors:", serializer.errors)
             return Response(serializer.errors, status=400)
+
+class NumerologyFiguresView(APIView):
+    def post(self, request):
+        user_info = request.data
+        api = RoxyAPINumerology()
+        data = api.numerologyFigures(user_info=user_info)
+        if data:
+            return Response(data)
+        return Response({'error': 'Could not fetch numerology figures'})
