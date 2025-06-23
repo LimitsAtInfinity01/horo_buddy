@@ -2,9 +2,7 @@ import React from 'react';
 import { useRouter  } from 'expo-router';
 import { Text, View, StyleSheet, Button } from 'react-native';
 
-
 import {COLORS} from '@/constants/theme'
-
 
 export default function Index() {
   const router = useRouter();
@@ -17,7 +15,6 @@ export default function Index() {
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   mainContainer:{

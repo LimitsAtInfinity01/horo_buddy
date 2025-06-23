@@ -22,7 +22,6 @@ class RoxyAPIHoroscope:
             response = requests.get(horoscopeURL)
             print(response.status_code)
             if 299 >= response.status_code >= 200:
-                print(response.json())
                 return response.json()
             else:
                 raise HoroscopeError("Cannot retrieve horoscope")
@@ -35,7 +34,6 @@ class RoxyAPIHoroscope:
         try:
             response = requests.get(zodiacURL)
             if 299 >= response.status_code >= 200:
-                print(response.json())
                 return response.json()
             else:
                 raise HoroscopeError('Cannot retrieve Zodiac Details')
@@ -44,7 +42,7 @@ class RoxyAPIHoroscope:
             return None
 
 
-    def compability(self, profiles):
+    def compatibility(self, profiles):
         compabilityURL = f"{self.base_url}compatibility?token={self.API_TOKEN}"
         try:
             response = requests.post(compabilityURL, json=profiles, timeout=10)
@@ -58,11 +56,9 @@ class RoxyAPIHoroscope:
 
     def personality(self, personal_details):
         personalityURL = f"{self.base_url}personality?token={API_KEY}"
-        print(personalityURL)
         try:
             response = requests.post(personalityURL, json=personal_details, timeout=10)
-            print(response)
-            print(response.status_code)
+
             if 299 >= response.status_code >= 200:
                 return response.json()
             else:
@@ -75,7 +71,6 @@ class RoxyAPIHoroscope:
         birthChartURL = f"{self.base_url}birth-chart?token={API_KEY}"
         try:
             response = requests.post(birthChartURL, json=personal_details, timeout=10)
-            print(response)
             if 299 >= response.status_code >= 200:
                 return response.json()
             else:
@@ -83,3 +78,4 @@ class RoxyAPIHoroscope:
         except requests.RequestException:
             print("Cannot connect to API")
             return None
+

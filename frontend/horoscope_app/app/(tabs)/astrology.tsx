@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 
 // API Components
-import { HoroscopeAPI, ZodiacSignDetails } from '@/components/fetch_horoscope'
+import { HoroscopeAPI, SignDetails } from '@/components/fetch_horoscope'
 
 // Theme 
 import { COLORS } from '@/constants/theme'
@@ -11,7 +11,7 @@ export default function Astroloy() {
   return (
     <View style={ styles.container } >
       <HoroscopeAPI TextStyle={ styles.text } />
-      <ZodiacSignDetails TextStyle={ styles.text } ViewStyle={ styles.ViewStyle } />
+      <SignDetails TextStyle={ styles.text } ViewStyle={ styles.ViewStyle } />
     </View>
   )
 }

@@ -24,6 +24,7 @@ class RoxyAPINumerology:
             print('Cannot connect to Numerology figures endpoint')
     
     def numerologyInterpretation(self, user_info):
+
         self.INTER_URL = f'{self.base_url}interpretations?token={API_KEY}'
         try:
             response = requests.post(self.INTER_URL, json=user_info, timeout=10)
@@ -34,10 +35,11 @@ class RoxyAPINumerology:
         except requests.RequestException:
             print('Cannot connect to numerology interpretaion endpoint ')
 
-    def lifePath(self, birth_date: str):
+    def lifePath(self, birthdate: str):
         # https://roxyapi.com/api/v1/data/astro/numerology/life-path-number?birthdate={birth_date}&token={your_api_token}
-        self.PATH_URL = f'{self.base_url}life-path-number?birthdate={birth_date}&token={API_KEY}'
-        print(self.PATH_URL)
+        print(f'birthdate: {birthdate}')
+        self.PATH_URL = f'{self.base_url}life-path-number?birthdate={birthdate}&token={API_KEY}'
+        print(f'URL: {self.PATH_URL}')
         try:
             response = requests.get(self.PATH_URL)
             print(response.status_code)
