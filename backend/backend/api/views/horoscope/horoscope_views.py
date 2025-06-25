@@ -44,7 +44,7 @@ class CompatibilityView(APIView):
 
 class PersonalityView(APIView):
     def post(self, request):
-        birthday_details = request.data.get('birthdate_details')
+        birthday_details = request.data
         api = RoxyAPIHoroscope()
         data = api.personality(personal_details=birthday_details)
         if data:
