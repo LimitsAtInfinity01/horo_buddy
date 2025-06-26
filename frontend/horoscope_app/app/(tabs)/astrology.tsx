@@ -1,55 +1,60 @@
+// astrology.tsx
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Pressable, Text } from 'react-native'
+import { useRouter } from 'expo-router'
 
-// API Components
-import { Horoscope, SignDetails, Compatibility, Personality, BirthChart } from '@/components/fetch_horoscope'
 
 // Theme 
 import { COLORS } from '@/constants/theme'
 
-
-
-
 export default function Astroloy() {
-
-  const person_one = 
-    {
-      "name": "Alice",
-      "birthdate": "1992-03-22",
-      "time_of_birth": "08:15:00",
-      "location": ''
-    }
-
-
+  const router = useRouter()
 
   return (
-    <View style={ styles.container } >
-      <BirthChart TextStyle={styles.text} birthdate_details={person_one} />
+    <View style={ styles.mainContainer }>
+
+      <Pressable id='sign_details' style={ styles.pressable } onPress={()=> router.push('/horoscope_sign_details')}>
+        <Text style={ styles.pressableText }>Discover all the details about your sign</Text>
+      </Pressable>
+
+      <Pressable id='compability' style={ styles.pressable } onPress={()=> router.push('/horoscope_compatibility')}>
+        <Text style={ styles.pressableText }>See if you are compable</Text>    
+      </Pressable>
+
+      <Pressable id='personality' style={ styles.pressable } onPress={()=> router.push('/horoscope_personality')}>
+        <Text style={ styles.pressableText }>Discover your personality traits</Text>  
+      </Pressable>
+
+      <Pressable id='birth_chart' style={ styles.pressable } onPress={()=> router.push('/horoscope_birth_chart')}>
+        <Text style={ styles.pressableText }>Get your birth chart</Text>  
+      </Pressable>
+
     </View>
   )
 }
 
 const styles = StyleSheet.create({
 
-  container: {
+  mainContainer: {
     flex: 1,
-    gap: 100,
-    padding: 25,
-    backgroundColor: COLORS.mainBackgroundColor
+    alignItems: 'center',
+    backgroundColor: COLORS.mainBackgroundColor,
+    gap: 25,
+    paddingTop: 20,
+    paddingBottom: 20,
   },
 
-  text: {
-    color: COLORS.mainColor
-  },
-
-  ViewStyle: {
-    flex: 1,
-    gap: 10
-  },
-
-  image: {
-    width: 100,
+  pressable: {
     height: 100,
+    width: '90%',
+    borderRadius: 7,
+    backgroundColor: 'white',
+    color: 'black',
+    padding: 10,
+  },
+
+  pressableText: {
+    color: 'red'
   },
 
 })
