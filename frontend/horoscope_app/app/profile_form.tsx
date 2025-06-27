@@ -27,7 +27,8 @@ export default function ProfileForm() {
           last_name: profileData.lastName,
           birthdate: profileData.birthdate,
           email: profileData.email,
-          zodiac_sign: profileData.zodiacSign
+          zodiac_sign: profileData.zodiacSign,
+          birth_location: profileData.birth_location
         })
       })
 

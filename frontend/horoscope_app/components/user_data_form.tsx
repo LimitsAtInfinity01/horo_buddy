@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, TextInput, StyleSheet, Pressable, Text, Button, Platform } from "react-native";
+import { View, TextInput, StyleSheet, Pressable, Text, Button, Platform, KeyboardAvoidingView, ScrollView } from "react-native";
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 
 import moment from 'moment';
@@ -7,7 +7,7 @@ import moment from 'moment';
 import { globalStyles } from '@/global_styles/global_styles';
 
 type UserFormProps = {
-    onSubmit?: (data: { name: string; lastName: string, zodiacSign: string, email: string, birthdate: string }) => void;
+    onSubmit?: (data: { name: string; lastName: string, zodiacSign: string, email: string, birthdate: string, birth_location: string }) => void;
 };
 
 export default function UserForm({ onSubmit }: UserFormProps) {
@@ -17,6 +17,7 @@ export default function UserForm({ onSubmit }: UserFormProps) {
     const [birthdate, setBirthdate] = useState(new Date())
     const [showPicker, setShowPicker] = useState(false);
     const [email, setEmail] = useState('');
+    const [birth_location, setBirth_location] = useState('')
     
 
     const handleSubmit = () => {
@@ -26,8 +27,14 @@ export default function UserForm({ onSubmit }: UserFormProps) {
         }
 
         if (onSubmit) {
-            onSubmit({ name, lastName, zodiacSign, birthdate: birthdate.toISOString(), email });
+            onSubmit({ name, lastName, zodiacSign, birthdate: birthdate.toISOString(), email, birth_location });
             alert("Profile created")
+            setName('');
+            setLastName('');
+            setSign('');
+            setBirthdate(new Date());
+            setEmail('');
+            setBirth_location('');
         }
     }
 
@@ -43,11 +50,27 @@ export default function UserForm({ onSubmit }: UserFormProps) {
       };
 
     return (
-        <View style={ styles.container }>
+       <KeyboardAvoidingView
+       
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={80}
+
+       >
+        <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+
+             <View style={ styles.container }>
 
             <View>
-                <Text  style={ styles.label }>Enter your name.</Text>
-                <TextInput placeholder='First name' placeholderTextColor="#999" style={ styles.textInput } onChangeText={setName} value={name} />
+                <Text style={styles.label}>Enter your name.</Text>
+                <TextInput
+                    placeholder="First name"
+                    placeholderTextColor="#999"
+                    style={styles.textInput}
+                    onChangeText={setName}
+                    value={name}
+                    autoCapitalize="words"
+                />
             </View>
 
             <View>
@@ -79,11 +102,26 @@ export default function UserForm({ onSubmit }: UserFormProps) {
                     />
                 )}
             </View>
+            
+            <View>
+                <Text style={ styles.label }>Birthdate location</Text>
+                <TextInput
+                    placeholder='Enter your birthdate location'
+                    placeholderTextColor="#999"
+                    style={ styles.textInput }
+                    onChangeText={setBirth_location}
+                    value={birth_location}
+                />
+            </View>
+
 
             <Pressable style={ styles.pressable } onPress={handleSubmit}>
                 <Text style={ styles.textPressable }>Submit</Text>
             </Pressable>
         </View>
+
+        </ScrollView>
+       </KeyboardAvoidingView>
     )
 }
 

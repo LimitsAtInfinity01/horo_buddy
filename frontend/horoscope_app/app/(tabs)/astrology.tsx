@@ -1,17 +1,40 @@
 // astrology.tsx
-import React from 'react'
-import { StyleSheet, View, Pressable, Text } from 'react-native'
-import { useRouter } from 'expo-router'
+import { useEffect, useState } from 'react'
+import { useRouter, } from 'expo-router'
+import { StyleSheet, View, Pressable, Text, } from 'react-native'
 
+
+import fetch_profile_data from '@/components/fetch_profile_data'
+
+import {Horoscope} from '@/components/fetch_horoscope'
 
 // Theme 
 import { COLORS } from '@/constants/theme'
 
+type ProfileData = {
+  zodiac_sign: string
+}
+
 export default function Astroloy() {
   const router = useRouter()
+  const [profileData, setProfileData] = useState<ProfileData | null>(null)
+
+  useEffect(() => {
+
+    const fetch_profile = async () => {
+      const data = await fetch_profile_data()
+      setProfileData(data)
+    }
+
+    fetch_profile()
+  }, [])
 
   return (
     <View style={ styles.mainContainer }>
+
+      <View>
+          {/* <Horoscope TextStyle={ styles.horoscopeText } sign='scorpio' /> */}
+      </View>
 
       <Pressable id='sign_details' style={ styles.pressable } onPress={()=> router.push('/horoscope_sign_details')}>
         <Text style={ styles.pressableText }>Discover all the details about your sign</Text>
@@ -56,5 +79,9 @@ const styles = StyleSheet.create({
   pressableText: {
     color: 'red'
   },
+
+  horoscopeText: {
+    color: 'white'
+  }
 
 })

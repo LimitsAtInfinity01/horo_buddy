@@ -33,7 +33,6 @@ export function Horoscope({ TextStyle, sign }: HoroscopeProps) {
           },
           body: JSON.stringify(sign_object)
         })
-        console.log(response)
         if (!response.ok) {
           console.log(response.status)
           return null

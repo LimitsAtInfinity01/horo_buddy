@@ -11,5 +11,4 @@ class Profile(models.Model):
     zodiac_sign = models.CharField(max_length=256, blank=False)
     email = models.CharField(max_length=256, blank=False)
     birthdate = models.DateTimeField(null=True, blank=True)
-
-
+    birth_location = models.CharField(max_length=256, blank=False)

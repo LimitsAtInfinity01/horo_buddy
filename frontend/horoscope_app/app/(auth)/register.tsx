@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
         flex: 1,
         gap: 50,
         alignItems: 'center',
-        backgroundColor: COLORS.background
+        backgroundColor: COLORS.mainBackgroundColor
     },
 
     textInput: {
