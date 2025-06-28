@@ -14,6 +14,7 @@ class HoroscopeView(APIView):
     def post(self, request):
         sign = request.data.get('sign')
         print(sign)
+        print(sign)
         api = RoxyAPIHoroscope()
         data = api.horoscope(sign=sign)
         if data:

@@ -28,12 +28,11 @@ export default function Astroloy() {
 
     fetch_profile()
   }, [])
-
   return (
     <View style={ styles.mainContainer }>
 
       <View>
-          {/* <Horoscope TextStyle={ styles.horoscopeText } sign='scorpio' /> */}
+          {/* <Horoscope TextStyle={ styles.horoscopeText } sign={profileData ? profileData.zodiac_sign : ''} /> */}
       </View>
 
       <Pressable id='sign_details' style={ styles.pressable } onPress={()=> router.push('/horoscope_sign_details')}>

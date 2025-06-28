@@ -19,40 +19,40 @@ type HoroscopeProps = StyleProps & {
 }
 
 export function Horoscope({ TextStyle, sign }: HoroscopeProps) {
-  const [horoscopeData, setHoroscopeData ] = useState<{ horoscope: string } | null>(null)
-  const sign_object = {
-    'sign': sign
-  }
+  const [horoscopeData, setHoroscopeData] = useState<{ horoscope: string } | null>(null)
+
   useEffect(() => {
-    async function horoscope() {
-      try{
+    if (!sign) return
+
+    async function fetchHoroscope(): Promise<void> {
+      try {
         const response = await fetch(HOROSCOPE_URL, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(sign_object)
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sign })
         })
+
         if (!response.ok) {
-          console.log(response.status)
-          return null
-        } 
+          console.log(`Response status: ${response.status}`)
+          return
+        }
+
         const data = await response.json()
         setHoroscopeData(data)
-        console.log(data)
-      }
-      catch (error) {
-        console.error(error)
+      } catch (error) {
+        console.error('Failed to fetch horoscope:', error)
       }
     }
-  horoscope()
-  }, [])
+
+    fetchHoroscope()
+  }, [sign])
 
   return (
-      <Text style={ TextStyle }>{horoscopeData ? horoscopeData.horoscope : ''}</Text>
+    <Text style={TextStyle}>
+      {horoscopeData ? horoscopeData.horoscope : 'Loading...'}
+    </Text>
   )
 }
-
 
 type SignDetailsProps = StyleProps & {
   sign: string
@@ -68,48 +68,51 @@ export function SignDetails({ TextStyle, ViewStyle, sign }: SignDetailsProps) {
     image: string
     personality: string
   }
-  const sign_object = {
-    'sign': sign
-  }
-  console.log(sign_object)
   const [zodiacData, setZodiacData] = useState<ZodiacStructure | null>(null)
   useEffect(() => {
-    async function zodiac() {
-    try {
-      const response = await fetch(SIGN_DETAILS_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(sign_object) //TODO Replace 'scorpio' with the desired zodiac sign
-      })
-      console.log(response.status)
-      if (!response.ok){
-        console.log(response.status)
-        return null
-        } else {
-        const data = await response.json()
-        console.log(data)
-        setZodiacData(data)
-        return data
-      }
-    } catch (error) {
-      console.error(error)
+    const sign_object = {
+      'sign': sign
     }
-  }
-  zodiac()
-  }, [])
+    async function zodiac() {
+      try {
+        const response = await fetch(SIGN_DETAILS_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(sign_object) //TODO Replace 'scorpio' with the desired zodiac sign
+        })
+        if (!response.ok){
+          console.log(`Response status: ${response.status}`)
+          return null
+        } else {
+          const data = await response.json()
+          setZodiacData(data)
+          return data
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    zodiac()
+  }, [sign])
   return (
     <View style={ ViewStyle }>
-      <Text style={ TextStyle }>Zodiac Sign Details:</Text>
-      <Text style={ TextStyle }>Name: {zodiacData ? zodiacData.name : ''}</Text>
-      <Text style={ TextStyle }>Symbol: {zodiacData ? zodiacData.symbol : ''}</Text>
-      <Text style={ TextStyle }>Start Date: {zodiacData ? zodiacData.start_date : ''}</Text>
-      <Text style={ TextStyle }>End Date: {zodiacData ? zodiacData.end_date : ''}</Text>
-      <Text style={ TextStyle }>Element: {zodiacData ? zodiacData.element : ''}</Text>
-      <Text style={ TextStyle }>Modality: {zodiacData ? zodiacData.modality : ''}</Text>
-      <Text style={ TextStyle }>Image: {zodiacData ? zodiacData.image : ''}</Text>
-      <Text style={ TextStyle }>Personality: {zodiacData ? zodiacData.personality : ''}</Text>
+      {zodiacData ? (
+        <>
+          <Text style={TextStyle}>Zodiac Sign Details:</Text>
+          <Text style={TextStyle}>Name: {zodiacData.name}</Text>
+          <Text style={TextStyle}>Symbol: {zodiacData.symbol}</Text>
+          <Text style={TextStyle}>Start Date: {zodiacData.start_date}</Text>
+          <Text style={TextStyle}>End Date: {zodiacData.end_date}</Text>
+          <Text style={TextStyle}>Element: {zodiacData.element}</Text>
+          <Text style={TextStyle}>Modality: {zodiacData.modality}</Text>
+          <Text style={TextStyle}>Image: {zodiacData.image}</Text>
+          <Text style={TextStyle}>Personality: {zodiacData.personality}</Text>
+        </>
+      ) : (
+        <Text style={TextStyle}>Loading...</Text>
+      )}
     </View>
   )
 }

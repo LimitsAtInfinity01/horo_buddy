@@ -23,11 +23,11 @@ export default function HoroscopeSignDetails() {
       fetch_profile()
     }, [])
 
-    
+    console.log(`Profile data: ${profileData?.zodiac_sign}`)
     return (
     <View>
       <Text>Goroscope Sign Details</Text>
-      <SignDetails sign={profileData ? profileData.zodiac_sign : '' } />
+      {/* <SignDetails sign={profileData ? profileData.zodiac_sign : '' } /> */}
       <Button onPress={() => router.back()} title="Go back!" />
     </View>
   )

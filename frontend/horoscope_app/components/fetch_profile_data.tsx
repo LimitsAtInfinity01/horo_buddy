@@ -20,6 +20,6 @@ export default async function fetch_profile_data() {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error(error);
+    console.error(`Error: ${error}`);
   }
 }
