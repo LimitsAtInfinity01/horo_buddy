@@ -2,7 +2,7 @@ import React from 'react'
 import { useRouter } from 'expo-router'
 import { StyleSheet, Text, View, Button } from 'react-native'
 
-import { Compatibility } from '@/components/fetch_horoscope'
+import { Compatibility } from '@/components/calculate_compability'
 
 const person_one = {
     name: "Jane Doe",
@@ -16,9 +16,17 @@ const person_two = {
     time_of_birth: "14:00",
 }
 
+// TODO: write a form to get the data of the persons to
+//       calculate their compability
+
 export default function HoroscopeCompability() {
 
     const router = useRouter()
+
+    // if form filled return the details
+    // else fill the form.
+    
+
 
     return (
     <View>

@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
-from api.tarot_api import RoxyAPITarot
+from api.wrapper_tarot_api import RoxyAPITarot
 
 class ThreeCardDrawView(APIView):
     def get(self, request):

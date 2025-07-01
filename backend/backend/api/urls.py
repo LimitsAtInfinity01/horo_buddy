@@ -1,6 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from api.views.views import UserRegisterView, ProfileView
+
+from api.views.views import UserRegisterView, ProfileView, HoroscopeStaticData
                     
 
 from api.views.horoscope.horoscope_views import HoroscopeView, CompatibilityView, PersonalityView, BirthChartView, SignDetailsView
@@ -8,6 +9,7 @@ from api.views.numerology.numerology_views import (NumerologyFiguresView, Numero
                                                    lifePathView, SoulUrgeNumber, CompatibilityAnalysisView)        
 from api.views.tarot.tarot_views import (ThreeCardDrawView, SingleCardDrawView, YesNoTarotReadingView,
                                          FullTarotDeckView, SpecificTarotCardView, SpecificTarotSpread)
+
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -21,6 +23,9 @@ urlpatterns = [
     path('register/', UserRegisterView.as_view(), name='user-register'),
     path('token/',    TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    # HoroscopeStaticData
+    path('horoscope_static/', HoroscopeStaticData.as_view(), name='horoscope_static'),
     
     # Horoscope endpoint urls
     path('horoscope/', HoroscopeView.as_view(), name='horoscope'),

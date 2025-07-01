@@ -3,44 +3,32 @@ import { useEffect, useState } from 'react'
 import { useRouter, } from 'expo-router'
 import { StyleSheet, View, Pressable, Text, } from 'react-native'
 
-
-import fetch_profile_data from '@/components/fetch_profile_data'
-
-import {Horoscope} from '@/components/fetch_horoscope'
+import fetch_horoscope_data from '@/components/fetch_horoscope_data'
 
 // Theme 
 import { COLORS } from '@/constants/theme'
 
-type ProfileData = {
-  zodiac_sign: string
-}
-
 export default function Astroloy() {
   const router = useRouter()
-  const [profileData, setProfileData] = useState<ProfileData | null>(null)
+  const [horoscope, setHoroscope] = useState('')
 
   useEffect(() => {
-
-    const fetch_profile = async () => {
-      const data = await fetch_profile_data()
-      setProfileData(data)
-    }
-
-    fetch_profile()
+    const fetch_horoscope = async () => {
+          const data = await fetch_horoscope_data()
+          setHoroscope(data['horoscope']['horoscope'])
+      }
+      fetch_horoscope()
   }, [])
+
   return (
     <View style={ styles.mainContainer }>
 
       <View>
-          {/* <Horoscope TextStyle={ styles.horoscopeText } sign={profileData ? profileData.zodiac_sign : ''} /> */}
+          <Text style={ styles.horoscopeText }>{horoscope ?? "Loading"}</Text>
       </View>
 
       <Pressable id='sign_details' style={ styles.pressable } onPress={()=> router.push('/horoscope_sign_details')}>
         <Text style={ styles.pressableText }>Discover all the details about your sign</Text>
-      </Pressable>
-
-      <Pressable id='compability' style={ styles.pressable } onPress={()=> router.push('/horoscope_compatibility')}>
-        <Text style={ styles.pressableText }>See if you are compable</Text>    
       </Pressable>
 
       <Pressable id='personality' style={ styles.pressable } onPress={()=> router.push('/horoscope_personality')}>
@@ -49,6 +37,10 @@ export default function Astroloy() {
 
       <Pressable id='birth_chart' style={ styles.pressable } onPress={()=> router.push('/horoscope_birth_chart')}>
         <Text style={ styles.pressableText }>Get your birth chart</Text>  
+      </Pressable>
+
+      <Pressable id='compability' style={ styles.pressable } onPress={()=> router.push('/horoscope_compatibility')}>
+        <Text style={ styles.pressableText }>See if you are compable</Text>    
       </Pressable>
 
     </View>

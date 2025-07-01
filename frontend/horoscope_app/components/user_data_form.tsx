@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { View, TextInput, StyleSheet, Pressable, Text, Button, Platform, KeyboardAvoidingView, ScrollView } from "react-native";
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 
 import moment from 'moment';
 

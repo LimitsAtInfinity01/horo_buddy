@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from api.numerology_api import RoxyAPINumerology
+from api.wrapper_numerology_api import RoxyAPINumerology
 
 class NumerologyFiguresView(APIView):
     def post(self, request):

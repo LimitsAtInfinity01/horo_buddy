@@ -7,18 +7,15 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
-from api.horoscope_api import RoxyAPIHoroscope
-
+from api.wrapper_horoscope_api import RoxyAPIHoroscope
+from api.models import HoroscopeData
 
 class HoroscopeView(APIView):
     def post(self, request):
         sign = request.data.get('sign')
-        print(sign)
-        print(sign)
         api = RoxyAPIHoroscope()
         data = api.horoscope(sign=sign)
         if data:
-            print(data)
             return Response(data)
         return Response({'error': 'Could not fetch horoscope'})
 
